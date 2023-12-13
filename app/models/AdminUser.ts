@@ -14,6 +14,7 @@ const AdminUserSchema = new Schema<AdminUserDocument>({
     plan: { type: String, default: 'free' },
 })
 
-const AdminUser = mongoose.model<AdminUserDocument>("AdminUser", AdminUserSchema)
+// const AdminUser = mongoose.model<AdminUserDocument>("AdminUser", AdminUserSchema)
+const AdminUser = mongoose.models['AdminUser'] || mongoose.model('AdminUser', AdminUserSchema);
 
 export default AdminUser;

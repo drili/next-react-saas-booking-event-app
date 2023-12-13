@@ -1,21 +1,26 @@
-import express, { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import AdminUser from '@/app/models/AdminUser';
+import bcrypt from 'bcrypt'
+import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 
-const server = express()
-server.use(express.json())
+import AdminUser from '@/app/models/AdminUser'
+import connectDb from '@/app/lib/connectToDb';
 
-// *** Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || '')
-
-server.post("/api/register", async (req: Request, res: Response) => {
+export async function POST(req: Request, res: NextApiResponse) {
+    await connectDb();
+    
     try {
-        const { email, password, domain } = req.body
+        const body = await req.json()
+
+        const { email, password, domain } = body 
+        console.log({ email, password, domain });
+        
+        if (!email || !password || !domain) {
+            return new NextResponse("Fields are missing", { status: 401 })
+        }
 
         const existingUser = await AdminUser.findOne({ email })
         if (existingUser) {
-            return res.status(400).json({ error: "Email is already registered" })
+            return new NextResponse("User already exists", { status: 401 })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -24,19 +29,14 @@ server.post("/api/register", async (req: Request, res: Response) => {
             email,
             password: hashedPassword,
             domain,
-            plan: "free"
+            plan: 'free',
         })
 
         await newUser.save()
 
-        res.status(201).json({ message: "Registration successful." })
+        return NextResponse.json(newUser)
     } catch (error) {
-        console.error('Registration error', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.log(["REGISTRATION_POST"], {error});
+        return new NextResponse("Internal error", { status: 500 })
     }
-})
-
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+}

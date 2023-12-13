@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
+import axios from 'axios'
 
 const RegistrationForm: React.FC = () => {
     const [email, setEmail] = useState("")
@@ -9,12 +10,21 @@ const RegistrationForm: React.FC = () => {
 
     const handleRegister = async () => {
         try {
-            // TODO: Handle registration logic
             console.log(`handleRegister()`);
-            
+            const response = await axios.post(`/api/registration`, {
+                email,
+                password,
+                domain
+            })
+
+            if (response.status = 201) {
+                console.log(`Registration was successful:`, response.data.message);
+            } else {
+                console.error('Registration failed:', response.data.error || 'Unexpected error');
+
+            }
         } catch (error) {
             console.error("Registration failed.", error);
-
         }
     }
 
