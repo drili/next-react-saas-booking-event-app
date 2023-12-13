@@ -16,5 +16,6 @@ const config: Config = {
     },
   },
   plugins: [],
+  allowJs: true
 }
 export default config
