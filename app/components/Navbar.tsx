@@ -6,13 +6,13 @@ interface MenuObject {
     menuText: string;
 }
 
-interface NavbarProps {
+interface NavbarMenuProps {
     menuItems: MenuObject[]
 }
 
-const Navbar: React.FC<NavbarProps> = ({ menuItems }) => {
+const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
   return (
-    <div id='component_Navbar'>
+    <div id='component_NavbarMenu'>
         <nav>
             <ul>
                 {menuItems.map((item, index) => (
@@ -28,4 +28,4 @@ const Navbar: React.FC<NavbarProps> = ({ menuItems }) => {
   )
 }
 
-export default Navbar
+export default NavbarMenu
