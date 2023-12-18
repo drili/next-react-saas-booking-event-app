@@ -14,12 +14,11 @@ interface NavbarMenuProps {
     menuItems: MenuObject[]
 }
 
-
 const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     return (
-        <div id='component_NavbarMenu'>
+        <div id='component_NavbarMenu' className='mb-10'>
             <div className='navbarmenu-wrapper'>
                 <Navbar fluid rounded >
                     <Navbar.Brand href="https://flowbite-react.com">
@@ -50,6 +49,7 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
                             </>
                         ) : (
                             <div className='flex items-center gap-2'>
+                                <Link href="/registration">Register</Link>
                                 <Link href="/login">Login</Link>
                                 <Navbar.Toggle />
                             </div>
