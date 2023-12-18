@@ -11,7 +11,7 @@ const RegistrationForm: React.FC = () => {
     const handleRegister = async () => {
         try {
             console.log(`handleRegister()`);
-            const response = await axios.post(`/api/registration`, {
+            const response = await axios.post(`/api/auth`, {
                 email,
                 password,
                 domain
