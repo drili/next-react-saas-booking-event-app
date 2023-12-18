@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Navbar from './components/Navbar'
+import Navbar from './components/NavbarMenu'
 
 export default function Home() {
     const menuItems = [
@@ -9,8 +9,6 @@ export default function Home() {
 
     return (
         <div id='component_Home'>
-            <Navbar menuItems={menuItems} />
-
             <div>
                 <h1>Home</h1>
             </div>
