@@ -1,8 +1,8 @@
 import React from 'react';
-import RegistrationForm from '@/app/components/registration/RegistrationForm';
-import Heading from '@/app/components/Heading';
+import Link from 'next/link';
 
-import { Toaster } from 'react-hot-toast';
+import RegistrationForm from '@/app/components/auth/RegistrationForm';
+import Heading from '@/app/components/Heading';
 
 const RegisterPage: React.FC = () => {
     return (
@@ -14,7 +14,12 @@ const RegisterPage: React.FC = () => {
 
             <RegistrationForm align="center" />
 
-            <Toaster />
+            <div className='flex justify-center mt-10 gap-2'>
+                <p>Already got an account?</p>
+                <Link href="/login">
+                    Login
+                </Link>
+            </div>
         </div>
     );
 };

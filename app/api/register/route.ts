@@ -10,9 +10,8 @@ export async function POST(req: Request, res: NextApiResponse) {
     
     try {
         const body = await req.json()
-
         const { email, password, domain } = body 
-        console.log({ email, password, domain });
+        // console.log({ email, password, domain });
         
         if (!email || !password || !domain) {
             return new NextResponse("Fields are missing", { status: 401 })

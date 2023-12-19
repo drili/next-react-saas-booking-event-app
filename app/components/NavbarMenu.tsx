@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import Link from 'next/link';
 
 interface MenuObject {
@@ -49,8 +49,16 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
                             </>
                         ) : (
                             <div className='flex items-center gap-2'>
-                                <Link href="/registration">Register</Link>
-                                <Link href="/login">Login</Link>
+                                <Link href="/registration">
+                                    <Button color='gray'>
+                                        Register
+                                    </Button>
+                                </Link>
+                                <Link href="/login">
+                                    <Button color='dark'>
+                                        Login
+                                    </Button>
+                                </Link>
                                 <Navbar.Toggle />
                             </div>
                         )}

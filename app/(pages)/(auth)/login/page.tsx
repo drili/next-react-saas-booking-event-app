@@ -1,9 +1,17 @@
 import React from 'react';
 
+import Heading from '@/app/components/Heading';
+import LoginForm from '@/app/components/auth/LoginForm';
+
 const LoginPage: React.FC = () => {
     return (
         <div>
-            <h1>Login Page</h1>
+            <Heading
+                headingText='Eventify Login'
+                align="center"
+            />
+
+            <LoginForm align="center" />
 
         </div>
     );

@@ -6,6 +6,7 @@ import "./assets/css/reset.css"
 import "./assets/css/flowbite-overrides.css"
 
 import NavbarMenu from './components/NavbarMenu'
+import { UserProvider, useUser } from './context/UserContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,15 +26,17 @@ export default function RootLayout({
     ]
 
     return (
-        <html lang="en">
-            <body className={`${inter.className} flex justify-center`}>
-                <main className='container'>
+        <UserProvider>
+            <html lang="en">
+                <body className={`${inter.className} flex justify-center`}>
+                    <main className='container'>
 
-                    <NavbarMenu menuItems={menuItems} />
-                    {children}
+                        <NavbarMenu menuItems={menuItems} />
+                        {children}
 
-                </main>
-            </body>
-        </html>
+                    </main>
+                </body>
+            </html>
+        </UserProvider>
     )
 }
