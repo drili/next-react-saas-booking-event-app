@@ -25,7 +25,7 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
         <div id='component_NavbarMenu' className='mb-10'>
             <div className='navbarmenu-wrapper'>
                 <Navbar fluid rounded >
-                    <Navbar.Brand href="https://flowbite-react.com">
+                    <Navbar.Brand href="/">
                         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Eventify</span>
                     </Navbar.Brand>
 
