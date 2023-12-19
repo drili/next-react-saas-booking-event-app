@@ -1,17 +1,25 @@
-import Image from 'next/image'
-import Navbar from './components/NavbarMenu'
+"use client";
 
-export default function Home() {
-    const menuItems = [
-        { menuLink: '/link1', menuText: 'Link 1' },
-        { menuLink: '/link2', menuText: 'Link 2' },
-    ]
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthProvider';
 
-    return (
-        <div id='component_Home'>
-            <div>
-                <h1>Home</h1>
-            </div>
-        </div>
-    )
+interface HomeProps {
+    user: object;
 }
+
+const Home: React.FC<HomeProps> = () => {
+    const { user, isAuthenticated } = useAuth();
+    const router = useRouter();
+    const userLoggedIn = (user as any)?.user;
+
+    useEffect(() => {
+        if (isAuthenticated() && userLoggedIn) {
+            router.push(`/dashboard/${userLoggedIn._id}`);
+        }
+    }, [isAuthenticated, userLoggedIn, router]);
+
+    return <div>Home Page</div>;
+};
+
+export default Home;

@@ -1,7 +1,6 @@
 "use client"
 
 import { Inter } from 'next/font/google'
-import { useEffect, useState } from 'react'
 
 import './globals.css'
 import "./assets/css/reset.css"
@@ -17,21 +16,16 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    const menuItems = [
-        { menuLink: '/link1', menuText: 'Link 1' },
-        { menuLink: '/link2', menuText: 'Link 2' },
-    ]
-
     return (
         <html lang="en">
             <body className={`${inter.className} flex justify-center`}>
-                <main className='container'>
+                <div className='container'>
 
                     <AuthProvider>
-                        <NavbarMenu menuItems={menuItems} />
+                        <NavbarMenu menuItems={[]}/>
                         {children}
                     </AuthProvider>
-                </main>
+                </div>
             </body>
         </html>
     )

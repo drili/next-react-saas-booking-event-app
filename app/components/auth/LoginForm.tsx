@@ -26,14 +26,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ align }) => {
             if (response.status === 200) {
                 const userData = response.data;
 
-                // Update the authentication context with the user data
                 updateUser(userData);
-
-                // Set the authentication token in localStorage
                 setAuthToken(userData.token);
+                console.log({userData});
+                
+                // router.push(`/dashboard`);
 
-                // Redirect the user to the dashboard or any other authenticated page
-                router.push('/dashboard');
+                router.push(`/dashboard/${userData.user._id}`);
             } else {
                 console.error('Login failed:', response.data.error || 'Unexpected error');
             }
