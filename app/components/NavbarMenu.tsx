@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react'
 
-import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, Button, Dropdown, Navbar, Badge } from 'flowbite-react';
 import Link from 'next/link';
+
+import { useAuth } from '@/app/context/AuthProvider';
 
 interface MenuObject {
     menuLink: string;
@@ -15,7 +17,9 @@ interface NavbarMenuProps {
 }
 
 const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const { user, isAuthenticated, logout } = useAuth();
+
+    const userLoggedIn = (user as any)?.user
 
     return (
         <div id='component_NavbarMenu' className='mb-10'>
@@ -26,8 +30,12 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
                     </Navbar.Brand>
 
                     <div className="flex md:order-2">
-                        {isLoggedIn ? (
-                            <>
+                        {isAuthenticated() ? (
+                            <span className='flex items-center gap-4'>
+                                <div>
+                                    <Badge color="gray">{userLoggedIn?.plan}</Badge>
+                                </div>
+
                                 <Dropdown
                                     arrowIcon={false}
                                     inline
@@ -36,17 +44,16 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
                                     }
                                 >
                                     <Dropdown.Header>
-                                        <span className="block text-sm">Bonnie Green</span>
-                                        <span className="block truncate text-sm font-medium">name@flowbite.com</span>
+                                        <span className="block text-sm mb-2">{userLoggedIn?.domain}</span>
+                                        <span className="block truncate text-sm font-medium">{userLoggedIn?.email}</span>
                                     </Dropdown.Header>
                                     <Dropdown.Item>Dashboard</Dropdown.Item>
-                                    <Dropdown.Item>Settings</Dropdown.Item>
-                                    <Dropdown.Item>Earnings</Dropdown.Item>
+                                    <Dropdown.Item>User Settings</Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item>Sign out</Dropdown.Item>
+                                    <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
                                 </Dropdown>
                                 <Navbar.Toggle />
-                            </>
+                            </span>
                         ) : (
                             <div className='flex items-center gap-2'>
                                 <Link href="/registration">

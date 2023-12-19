@@ -3,35 +3,44 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-import { useUser } from '@/app/context/UserContext';
+import { useAuth } from '@/app/context/AuthProvider';
+import { setAuthToken } from '@/app/utility/auth';
 
 interface LoginFormProps {
     align: string;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ align }) => {
-    const {user, setUser } = useUser()
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const { user, isAuthenticated, logout, setUser, updateUser } = useAuth();
+    const router = useRouter();
+
     const handleLogin = async () => {
         try {
-            const response = await axios.post("/api/login/", { email, password })
+            const response = await axios.post("/api/login", { email, password });
 
             if (response.status === 200) {
                 const userData = response.data;
 
-                setUser(userData.user)
-                localStorage.setItem('authToken', userData.token);
+                // Update the authentication context with the user data
+                updateUser(userData);
+
+                // Set the authentication token in localStorage
+                setAuthToken(userData.token);
+
+                // Redirect the user to the dashboard or any other authenticated page
+                router.push('/dashboard');
             } else {
                 console.error('Login failed:', response.data.error || 'Unexpected error');
             }
         } catch (error) {
             console.error('Login failed:', error);
         }
-    }
+    };
 
     return (
         <div id='component_LoginForm' className={`flex justify-${align}`}>
@@ -64,7 +73,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ align }) => {
                     />
                 </div>
 
-                <Button type="button" color='dark' onClick={handleLogin}>Register Domain</Button>
+                <Button type="button" color='dark' onClick={handleLogin}>Login To Domain</Button>
             </form>
         </div>
     )
